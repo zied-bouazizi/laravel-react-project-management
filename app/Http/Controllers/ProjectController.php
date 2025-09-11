@@ -15,12 +15,23 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::query()->paginate(10)->onEachSide(1);
+        $query = Project::query();
 
-        return Inertia::render('Project/Index', [
-            'projects' => ProjectResource::collection($projects)
+        if (request("name")) {
+            $query->where("name", "like", "%" . request("name") . "%");
+        }
+        if (request("status")) {
+            $query->where("status", request("status"));
+        }
+
+        $projects = $query->paginate(10)->onEachSide(1);
+
+        return inertia("Project/Index", [
+            "projects" => ProjectResource::collection($projects),
+            'queryParams' => request()->query() ?: null
         ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
