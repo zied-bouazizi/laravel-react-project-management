@@ -26,11 +26,11 @@ export default function Edit({ project }) {
         <AuthenticatedLayout
             header={
                 <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200 leading-tight">
-                    Edit project "{project.name}"
+                    Edit Project "{project.name}"
                 </h2>
             }
         >
-            <Head title="Create Project" />
+            <Head title={`Edit Project "${project.name}"`} />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
