@@ -143,6 +143,14 @@ export default function TasksTable({
                         </tr>
                     </thead>
                     <tbody>
+                        {tasks.data.length === 0 && (
+                            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <td className="px-3 py-2" colSpan={hideProjectColumn ? 8 : 9}>
+                                    <p className="text-center">No Tasks Found</p>
+                                </td>
+                            </tr>
+                        )}
+
                         {tasks.data.map((task) => (
                             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={task.id}>
                                 <td className="px-3 py-2">{task.id}</td>
