@@ -70,7 +70,10 @@ export default function TasksTable({
             return;
         }
 
-        router.delete(route("task.destroy", task.id));
+         router.delete(route("task.destroy", task.id), {
+            preserveState: true,
+            preserveScroll: true, 
+        });
     }
 
     return (
