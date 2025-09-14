@@ -1,12 +1,35 @@
 import Pagination from "@/Components/Pagination";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, router } from "@inertiajs/react";
+import { Head, Link, router, useForm } from "@inertiajs/react";
 import TableHeading from "@/Components/TableHeading";
 import Alert from "@/Components/Alert";
+import { useState } from "react";
+import ConfirmDelete from "@/Components/ConfirmDelete";
 
 export default function Index({ users, queryParams = null, success }) {
     queryParams = queryParams || {};
+
+    const [confirmingUser, setConfirmingUser] = useState(false);
+    const [userToDelete, setUserToDelete] = useState(null);
+
+    const { delete: destroy, processing } = useForm();
+    
+    const openDeleteModal = (user) => {
+        setUserToDelete(user);
+        setConfirmingUser(true);
+    };
+
+    const closeDeleteModal = () => {
+        setUserToDelete(null);
+        setConfirmingUser(false);
+    };
+
+    const deleteUser = () => {
+        destroy(route("user.destroy", userToDelete.id), { 
+            onSuccess: closeDeleteModal
+         });
+    };
 
     const searchFieldChanged = (name, value) => {
         if (value) {
@@ -37,14 +60,6 @@ export default function Index({ users, queryParams = null, success }) {
         }
         router.get(route("user.index"), queryParams);
     };
-
-    const deleteUser = (user) => {
-        if (!window.confirm("Are you sure you want to delete the user?")) {
-            return;
-        }
-
-        router.delete(route("user.destroy", user.id));
-    }
 
     return (
         <AuthenticatedLayout
@@ -157,7 +172,7 @@ export default function Index({ users, queryParams = null, success }) {
                                                         Edit
                                                     </Link>
                                                     <button
-                                                        onClick={(e) => deleteUser(user)}
+                                                        onClick={() => openDeleteModal(user)}
                                                         className="font-medium text-red-600 dark:text-red-500 hover:underline mx-1"
                                                     >
                                                         Delete
@@ -173,6 +188,14 @@ export default function Index({ users, queryParams = null, success }) {
                     </div>
                 </div>
             </div>
+
+            <ConfirmDelete
+                show={confirmingUser}
+                onClose={closeDeleteModal}
+                onDelete={deleteUser}
+                processing={processing}
+                itemName="user"
+            />
         </AuthenticatedLayout >
     )
 }

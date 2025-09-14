@@ -3,12 +3,35 @@ import SelectInput from "@/Components/SelectInput";
 import TextInput from "@/Components/TextInput";
 import { PROJECT_STATUS_CLASS_MAP, PROJECT_STATUS_TEXT_MAP } from "@/constants";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, router } from "@inertiajs/react";
+import { Head, Link, router, useForm } from "@inertiajs/react";
 import TableHeading from "@/Components/TableHeading";
 import Alert from "@/Components/Alert";
+import { useState } from "react";
+import ConfirmDelete from "@/Components/ConfirmDelete";
 
 export default function Index({ projects, queryParams = null, success }) {
     queryParams = queryParams || {};
+
+    const [confirmingProject, setConfirmingProject] = useState(false);
+    const [projectToDelete, setProjectToDelete] = useState(null);
+
+    const { delete: destroy, processing } = useForm();
+
+    const openDeleteModal = (project) => {
+        setProjectToDelete(project);
+        setConfirmingProject(true);
+    };
+
+    const closeDeleteModal = () => {
+        setProjectToDelete(null);
+        setConfirmingProject(false);
+    };
+
+    const deleteProject = () => {
+        destroy(route("project.destroy", projectToDelete.id), { 
+            onSuccess: closeDeleteModal 
+        });
+    };
 
     const searchFieldChanged = (name, value) => {
         if (value) {
@@ -38,13 +61,6 @@ export default function Index({ projects, queryParams = null, success }) {
             queryParams.sort_direction = "asc";
         }
         router.get(route("project.index"), queryParams);
-    };
-
-    const deleteProject = (project) => {
-        if (!window.confirm("Are you sure you want to delete the project?")) {
-            return;
-        }
-        router.delete(route("project.destroy", project.id));
     };
 
     return (
@@ -187,7 +203,7 @@ export default function Index({ projects, queryParams = null, success }) {
                                                         Edit
                                                     </Link>
                                                     <button
-                                                        onClick={(e) => deleteProject(project)}
+                                                        onClick={() => openDeleteModal(project)}
                                                         className="font-medium text-red-600 dark:text-red-500 hover:underline mx-1"
                                                     >
                                                         Delete
@@ -203,6 +219,15 @@ export default function Index({ projects, queryParams = null, success }) {
                     </div>
                 </div>
             </div>
+
+            <ConfirmDelete
+                show={confirmingProject}
+                onClose={closeDeleteModal}
+                onDelete={deleteProject}
+                processing={processing}
+                itemName="project"
+                description="Once your project is deleted, all of its tasks will be permanently deleted."
+            />
         </AuthenticatedLayout >
     )
 }
