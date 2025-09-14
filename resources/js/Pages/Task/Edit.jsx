@@ -42,11 +42,9 @@ export default function Edit({ task, projects, users }) {
                             onSubmit={onSubmit}
                             className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg"
                         >
-                            {task.image_path && (
-                                <div className="mb-4">
-                                    <img src={task.image_path} className="w-64" />
-                                </div>
-                            )}
+                            <div className="mb-4">
+                                <img src={task.image_path} className="w-64" />
+                            </div>
                             <div>
                                 <InputLabel htmlFor="task_project_id" value="Project" />
 

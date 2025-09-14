@@ -39,11 +39,9 @@ export default function Edit({ project }) {
                             onSubmit={onSubmit}
                             className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg"
                         >
-                            {project.image_path && (
-                                <div className="mb-4">
-                                    <img src={project.image_path} className="w-64" />
-                                </div>
-                            )}
+                            <div className="mb-4">
+                                <img src={project.image_path} className="w-64" />
+                            </div>
                             <div>
                                 <InputLabel
                                     htmlFor="project_image_path"
