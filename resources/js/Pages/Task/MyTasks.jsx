@@ -2,7 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import TasksTable from "./TasksTable";
 
-export default function MyTasks({ tasks, queryParams = null, success }) {
+export default function MyTasks({ tasks, queryParams = null, success, allMyTasksCount }) {
     return (
         <AuthenticatedLayout
             header={
@@ -14,7 +14,7 @@ export default function MyTasks({ tasks, queryParams = null, success }) {
                         href={route("task.create")}
                         className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
                     >
-                        Add new
+                        Create Task
                     </Link>
                 </div>
             }
@@ -30,6 +30,7 @@ export default function MyTasks({ tasks, queryParams = null, success }) {
                                 success={success}
                                 queryParams={queryParams}
                                 inMyTasks={true}
+                                allTasksCount={allMyTasksCount}
                             />
                         </div>
                     </div>

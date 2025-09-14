@@ -9,7 +9,7 @@ import Alert from "@/Components/Alert";
 import { useState } from "react";
 import ConfirmDelete from "@/Components/ConfirmDelete";
 
-export default function Index({ projects, queryParams = null, success }) {
+export default function Index({ projects, queryParams = null, success, allProjectsCount }) {
     queryParams = queryParams || {};
 
     const [confirmingProject, setConfirmingProject] = useState(false);
@@ -74,7 +74,7 @@ export default function Index({ projects, queryParams = null, success }) {
                         href={route("project.create")}
                         className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
                     >
-                        Add new
+                        Create Project
                     </Link>
                 </div>
             }
@@ -168,15 +168,20 @@ export default function Index({ projects, queryParams = null, success }) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {projects.data.length === 0 && (
+                                        {allProjectsCount === 0 ? (
                                             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                <td className="px-3 py-2" colSpan="8">
-                                                    <p className="text-center">No Projects Found</p>
+                                                <td colSpan="8" className="text-center px-3 py-2">
+                                                    No projects created yet
                                                 </td>
                                             </tr>
-                                        )}
-
-                                        {projects.data.map((project) => (
+                                        ) : projects.data.length === 0 ? (
+                                            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                <td colSpan="8" className="text-center px-3 py-2">
+                                                    No projects found
+                                                </td>
+                                            </tr>
+                                        ) : (
+                                            projects.data.map((project) => (
                                             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={project.id}>
                                                 <td className="px-3 py-2">{project.id}</td>
                                                 <td className="px-3 py-2">
@@ -210,7 +215,8 @@ export default function Index({ projects, queryParams = null, success }) {
                                                     </button>
                                                 </td>
                                             </tr>
-                                        ))}
+                                            ))
+                                        )} 
                                     </tbody>
                                 </table>
                             </div>

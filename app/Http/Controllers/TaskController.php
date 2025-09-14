@@ -37,10 +37,13 @@ class TaskController extends Controller
             ->paginate(10)
             ->onEachSide(1);
 
+        $allTasksCount = Task::count();
+
         return inertia("Task/Index", [
             'tasks' => TaskResource::collection($tasks),
             'queryParams' => request()->query() ?: null,
             'success' => session('success'),
+            'allTasksCount' => $allTasksCount,
         ]);
     }
 
@@ -82,7 +85,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        return Inertia("Task/Show", [
+        return inertia("Task/Show", [
             'task' => new TaskResource($task),
         ]);
     }
@@ -159,10 +162,13 @@ class TaskController extends Controller
             ->paginate(10)
             ->onEachSide(1);
 
+        $allMyTasksCount = Task::where('assigned_user_id', $user->id)->count();
+
         return inertia("Task/MyTasks", [
             "tasks" => TaskResource::collection($tasks),
             'queryParams' => request()->query() ?: null,
             'success' => session('success'),
+            'allMyTasksCount' => $allMyTasksCount,
         ]);
     }
 }
