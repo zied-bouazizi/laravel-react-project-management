@@ -144,7 +144,7 @@ export default function TasksTable({
                                 Due Date
                             </TableHeading>
                             <th className="px-3 py-3">Created By</th>
-                            <th className="px-3 py-3 text-right">Actions</th>
+                            <th className="px-3 py-3">Actions</th>
                         </tr>
                     </thead>
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
@@ -196,7 +196,7 @@ export default function TasksTable({
                             tasks.data.map((task) => (
                             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={task.id}>
                                 <td className="px-3 py-2">{task.id}</td>
-                                <td className="px-3 py-2">
+                                <td>
                                     <img src={task.image_path} style={{ width: 60 }} />
                                 </td>
                                 {!hideProjectColumn && (
@@ -218,7 +218,7 @@ export default function TasksTable({
                                 </td>
                                 <td className="px-3 py-2 text-nowrap">{task.created_at}</td>
                                 <td className="px-3 py-2 text-nowrap">{task.due_date}</td>
-                                <td className="px-3 py-2 text-nowrap">{task.createdBy?.name || "User Deleted"}</td>
+                                <td className="px-3 py-2 text-nowrap">{task.createdBy?.name || "Member Deleted"}</td>
                                 <td className="px-3 py-2 text-nowrap">
                                     <Link
                                         href={route("task.edit", task.id)}

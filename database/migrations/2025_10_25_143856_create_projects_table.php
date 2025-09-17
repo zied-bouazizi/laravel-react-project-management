@@ -29,6 +29,10 @@ return new class extends Migration
                 ->constrained('users')
                 ->nullOnDelete();
 
+            $table->foreignId('workspace_id')
+                ->constrained()
+                ->cascadeOnDelete();
+
             $table->timestamps();
         });
     }

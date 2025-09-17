@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Builder;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -22,6 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'email_verified_at',
+        'created_by',
     ];
 
     /**
@@ -45,5 +47,28 @@ class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function ownedWorkspace()
+    {
+        return $this->hasOne(Workspace::class, 'owner_id');
+    }
+
+    public function workspaces()
+    {
+        return $this->belongsToMany(Workspace::class, 'workspace_user')
+            ->withTimestamps();
+    }
+
+    public function createdUsers()
+    {
+        return $this->hasMany(User::class, 'created_by');
+    }
+
+    public function scopeInWorkspace(Builder $query, Workspace $workspace): Builder
+    {
+        return $query->whereHas('workspaces', function (Builder $workspaceQuery) use ($workspace) {
+            $workspaceQuery->where('workspace_id', $workspace->id);
+        });
     }
 }

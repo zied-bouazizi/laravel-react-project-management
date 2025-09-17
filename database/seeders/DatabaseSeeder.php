@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Project;
+use App\Models\Workspace;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,25 +15,35 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
+        $owner = User::factory()->create([
             'id' => 1,
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => bcrypt('123.321A'),
+            'name' => 'Workspace Owner',
+            'email' => 'owner@example.com',
             'email_verified_at' => time()
         ]);
-        User::factory()->create([
+
+        $member = User::factory()->create([
             'id' => 2,
-            'name' => 'John Doe',
-            'email' => 'john@example.com',
-            'password' => bcrypt('123.321A'),
-            'email_verified_at' => time()
+            'name' => 'Workspace Member',
+            'email' => 'member@example.com',
+            'email_verified_at' => time(),
+            'created_by' => $owner->id
+        ]);
+
+        $workspace = Workspace::factory()->create([
+            'id' => 1,
+            'name' => $owner->name . "'s Workspace",
+            'owner_id' => $owner->id
+        ]);
+
+        $workspace->members()->attach([
+            $owner->id => ['role' => 'owner'],
+            $member->id => ['role' => 'member']
         ]);
 
         Project::factory()
             ->count(30)
+            ->for($workspace, 'workspace')
             ->hasTasks(30)
             ->create();
     }

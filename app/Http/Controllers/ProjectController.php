@@ -10,17 +10,22 @@ use App\Models\Project;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ProjectController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        $this->authorize('viewAny', Project::class);
+
         $query = Project::query();
 
-        $sortField = request("sort_field", "created_at");
+        $sortField = request("sort_field", "id");
         $sortDirection = request("sort_direction", "desc");
 
         if (request("name")) {
@@ -34,6 +39,10 @@ class ProjectController extends Controller
             ->paginate(10)
             ->onEachSide(1);
 
+        if (request()->page && request()->page > $projects->lastPage()) {
+            abort(404);
+        }
+        
         $allProjectsCount = Project::count();
 
         return inertia("Project/Index", [
@@ -50,6 +59,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Project::class);
+
         return inertia("Project/Create");
     }
 
@@ -58,18 +69,25 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
+        $this->authorize('create', Project::class);
+
+        $workspace = Auth::user()->workspaces->first();
+
         $data = $request->validated();
-        /** @var $image \Illuminate\Http\UploadedFile */
+        /** @var \Illuminate\Http\UploadedFile|null $image */
         $image = $data['image'] ?? null;
+        $data['workspace_id'] = $workspace->id;
         $data['created_by'] = Auth::id();
         $data['updated_by'] = Auth::id();
+
         if ($image) {
             $data['image_path'] = $image->store('project/' . Str::random(), 'public');
         }
+
         Project::create($data);
 
         return to_route('project.index')
-            ->with('success', 'Project was created');
+            ->with('success', 'Project created successfully');
     }
 
     /**
@@ -77,9 +95,11 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+        $this->authorize('view', $project);
+
         $query = $project->tasks();
 
-        $sortField = request("sort_field", "created_at");
+        $sortField = request("sort_field", "id");
         $sortDirection = request("sort_direction", "desc");
 
         if (request("name")) {
@@ -109,6 +129,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $this->authorize('update', $project);
+
         return inertia("Project/Edit", [
             'project' => new ProjectResource($project),
         ]);
@@ -119,10 +141,13 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
+        $this->authorize('update', $project);
+
         $data = $request->validated();
-        /** @var $image \Illuminate\Http\UploadedFile */
+        /** @var \Illuminate\Http\UploadedFile|null $image */
         $image = $data['image'] ?? null;
         $data['updated_by'] = Auth::id();
+
         if ($image) {
             if ($project->image_path) {
                 Storage::disk('public')->deleteDirectory(dirname($project->image_path));
@@ -130,10 +155,11 @@ class ProjectController extends Controller
 
             $data['image_path'] = $image->store('project/' . Str::random(), 'public');
         }
+
         $project->update($data);
 
         return to_route('project.index')
-            ->with('success', "Project \"$project->name\" was updated");
+            ->with('success', "Project \"$project->name\" updated successfully");
     }
 
     /**
@@ -141,6 +167,8 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        $this->authorize('delete', $project);
+
         $name = $project->name;
 
         $project->delete();
@@ -150,6 +178,6 @@ class ProjectController extends Controller
         }
 
         return to_route('project.index')
-            ->with('success', "Project \"$name\" was deleted");
+            ->with('success', "Project \"$name\" deleted successfully");
     }
 }

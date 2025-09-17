@@ -39,6 +39,10 @@ return new class extends Migration
                 ->constrained('projects')
                 ->cascadeOnDelete();
 
+            $table->foreignId('workspace_id')
+                ->constrained()
+                ->cascadeOnDelete();
+
             $table->timestamps();
         });
     }
