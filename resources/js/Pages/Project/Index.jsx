@@ -1,7 +1,9 @@
 import Pagination from "@/Components/Pagination";
+import SelectInput from "@/Components/SelectInput";
+import TextInput from "@/Components/TextInput";
 import { PROJECT_STATUS_CLASS_MAP, PROJECT_STATUS_TEXT_MAP } from "@/constants";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 
 export default function index({ projects }) {
     return (
@@ -30,6 +32,37 @@ export default function index({ projects }) {
                                             <th className="px-3 py-3">Due Date</th>
                                             <th className="px-3 py-3">Created By</th>
                                             <th className="px-3 py-3 text-right">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
+                                        <tr className="text-nowrap">
+                                            <th className="px-3 py-3"></th>
+                                            <th className="px-3 py-3"></th>
+                                            <th className="px-3 py-3">
+                                                <TextInput
+                                                    className="w-full"
+                                                    defaultValue={queryParams.name}
+                                                    placeholder="Project Name"
+                                                    onBlur={(e) => searchFieldChanged("name", e.target.value)}
+                                                    onKeyPress={(e) => onKeyPress("name", e)}
+                                                />
+                                            </th>
+                                            <th className="px-3 py-3">
+                                                <SelectInput
+                                                    className="w-full"
+                                                    defaultValue={queryParams.status}
+                                                    onChange={(e) => searchFieldChanged('status', e.target.value)}
+                                                >
+                                                    <option value="">Select Status</option>
+                                                    <option value="pending">Pending</option>
+                                                    <option value="in_progress">In Progress</option>
+                                                    <option value="completed">Completed</option>
+                                                </SelectInput>
+                                            </th>
+                                            <th className="px-3 py-3"></th>
+                                            <th className="px-3 py-3"></th>
+                                            <th className="px-3 py-3"></th>
+                                            <th className="px-3 py-3"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
