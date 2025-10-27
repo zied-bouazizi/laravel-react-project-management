@@ -11,6 +11,12 @@ export default function AuthenticatedLayout({ header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
+    function isAllTasksActive() {
+        const current = route().current();
+
+        return ['task.index', 'task.create', 'task.edit', 'task.show'].includes(current);
+    }
+
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
             <nav className="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -32,19 +38,19 @@ export default function AuthenticatedLayout({ header, children }) {
                                 </NavLink>
                                 <NavLink
                                     href={route('project.index')}
-                                    active={route().current('project.index')}
+                                    active={route().current('project.*')}
                                 >
                                     Projects
                                 </NavLink>
                                 <NavLink
                                     href={route('task.index')}
-                                    active={route().current('task.index')}
+                                    active={isAllTasksActive()}
                                 >
                                     All Tasks
                                 </NavLink>
                                 <NavLink
                                     href={route('user.index')}
-                                    active={route().current('user.index')}
+                                    active={route().current('user.*')}
                                 >
                                     Users
                                 </NavLink>
@@ -157,6 +163,34 @@ export default function AuthenticatedLayout({ header, children }) {
                             active={route().current('dashboard')}
                         >
                             Dashboard
+                        </ResponsiveNavLink>
+
+                        <ResponsiveNavLink
+                            href={route('project.index')}
+                            active={route().current('project.*')}
+                        >
+                            Projects
+                        </ResponsiveNavLink>
+
+                        <ResponsiveNavLink
+                            href={route('task.index')}
+                            active={isAllTasksActive()}
+                        >
+                            All Tasks
+                        </ResponsiveNavLink>
+
+                        <ResponsiveNavLink
+                            href={route('user.index')}
+                            active={route().current('user.*')}
+                        >
+                            Users
+                        </ResponsiveNavLink>
+
+                        <ResponsiveNavLink
+                            href={route('task.myTasks')}
+                            active={route().current('task.myTasks')}
+                        >
+                            My Tasks
                         </ResponsiveNavLink>
                     </div>
 
