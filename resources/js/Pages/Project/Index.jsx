@@ -154,6 +154,14 @@ export default function index({ projects, queryParams = null, success }) {
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {projects.data.length === 0 && (
+                                            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                <td className="px-3 py-2" colSpan="8">
+                                                    <p className="text-center">No Projects Found</p>
+                                                </td>
+                                            </tr>
+                                        )}
+
                                         {projects.data.map((project) => (
                                             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={project.id}>
                                                 <td className="px-3 py-2">{project.id}</td>
