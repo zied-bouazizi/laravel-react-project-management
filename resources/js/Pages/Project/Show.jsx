@@ -81,10 +81,12 @@ export default function Show({ project, tasks, queryParams }) {
                                 </div>
                             </div>
 
-                            <div className="mt-4">
-                                <label className="font-bold text-lg">Project Description</label>
-                                <p className="mt-1">{project.description}</p>
-                            </div>
+                            {project.description && (
+                                <div className="mt-4">
+                                    <label className="font-bold text-lg">Project Description</label>
+                                    <p className="mt-1">{project.description}</p>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

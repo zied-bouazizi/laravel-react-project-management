@@ -105,10 +105,12 @@ export default function Show({ task }) {
                                 </div>
                             </div>
 
-                            <div className="mt-4">
-                                <label className="font-bold text-lg">Task Description</label>
-                                <p className="mt-1">{task.description}</p>
-                            </div>
+                            {task.description && (
+                                <div className="mt-4">
+                                    <label className="font-bold text-lg">Task Description</label>
+                                    <p className="mt-1">{task.description}</p>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
