@@ -180,7 +180,7 @@ export default function index({ projects, queryParams = null, success }) {
                                                 </td>
                                                 <td className="px-3 py-2 text-nowrap">{project.created_at}</td>
                                                 <td className="px-3 py-2 text-nowrap">{project.due_date}</td>
-                                                <td className="px-3 py-2">{project.createdBy.name}</td>
+                                                <td className="px-3 py-2 text-nowrap">{project.createdBy?.name || "User Deleted"}</td>
                                                 <td className="px-3 py-2 text-nowrap">
                                                     <Link
                                                         href={route("project.edit", project.id)}

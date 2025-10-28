@@ -62,7 +62,7 @@ export default function Show({ project, tasks, queryParams }) {
                                     </div>
                                     <div className="mt-4">
                                         <label className="font-bold text-lg">Created By</label>
-                                        <p className="mt-1">{project.createdBy.name}</p>
+                                        <p className="mt-1">{project.createdBy?.name || "User Deleted"}</p>
                                     </div>
                                 </div>
                                 <div>
@@ -76,7 +76,7 @@ export default function Show({ project, tasks, queryParams }) {
                                     </div>
                                     <div className="mt-4">
                                         <label className="font-bold text-lg">Updated By</label>
-                                        <p className="mt-1">{project.updatedBy.name}</p>
+                                        <p className="mt-1">{project.updatedBy?.name || "User Deleted"}</p>
                                     </div>
                                 </div>
                             </div>
