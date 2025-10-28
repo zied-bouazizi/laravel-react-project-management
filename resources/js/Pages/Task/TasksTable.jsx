@@ -3,8 +3,10 @@ import SelectInput from "@/Components/SelectInput";
 import TextInput from "@/Components/TextInput";
 import { TASK_STATUS_CLASS_MAP, TASK_STATUS_TEXT_MAP } from "@/constants";
 import TableHeading from "@/Components/TableHeading";
-import { Link, router } from "@inertiajs/react";
+import { Link, router, useForm } from "@inertiajs/react";
 import Alert from "@/Components/Alert";
+import { useState } from "react";
+import ConfirmDelete from "@/Components/ConfirmDelete";
 
 export default function TasksTable({
     tasks,
@@ -16,6 +18,29 @@ export default function TasksTable({
     inMyTasks = false
 }) {
     queryParams = queryParams || {};
+
+    const [confirmingTask, setConfirmingTask] = useState(false);
+    const [taskToDelete, setTaskToDelete] = useState(null);
+
+    const { delete: destroy, processing } = useForm();
+    
+    const openDeleteModal = (task) => {
+        setTaskToDelete(task);
+        setConfirmingTask(true);
+    };
+
+    const closeDeleteModal = () => {
+        setTaskToDelete(null);
+        setConfirmingTask(false);
+    };
+
+    const deleteTask = () => {
+        destroy(route("task.destroy", taskToDelete.id), { 
+            preserveState: true,
+            preserveScroll: true,
+            onSuccess: closeDeleteModal 
+        });
+    };
 
     const navigate = () => {
         let targetRoute;
@@ -64,17 +89,6 @@ export default function TasksTable({
 
         navigate();
     };
-
-    const deleteTask = (task) => {
-        if (!window.confirm("Are you sure you want to delete the task?")) {
-            return;
-        }
-
-         router.delete(route("task.destroy", task.id), {
-            preserveState: true,
-            preserveScroll: true, 
-        });
-    }
 
     return (
         <>
@@ -207,7 +221,7 @@ export default function TasksTable({
                                         Edit
                                     </Link>
                                     <button
-                                        onClick={(e) => deleteTask(task)}
+                                        onClick={() => openDeleteModal(task)}
                                         className="font-medium text-red-600 dark:text-red-500 hover:underline mx-1"
                                     >
                                         Delete
@@ -219,6 +233,14 @@ export default function TasksTable({
                 </table>
             </div>
             <Pagination links={tasks.meta.links} />
+
+            <ConfirmDelete
+                show={confirmingTask}
+                onClose={closeDeleteModal}
+                onDelete={deleteTask}
+                processing={processing}
+                itemName="task"
+            />
         </>
     )
 }
