@@ -14,7 +14,7 @@ export default function Show({ task }) {
                         href={route("task.edit", task.id)}
                         className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
                     >
-                        Edit
+                        Edit 
                     </Link>
                 </div>
             }
@@ -24,15 +24,13 @@ export default function Show({ task }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                        {task.image_path && (
-                            <div>
-                                <img
-                                    src={task.image_path}
-                                    alt=""
-                                    className="w-full h-64 object-cover"
-                                />
-                            </div>
-                        )}
+                        <div>
+                            <img
+                                src={task.image_path}
+                                alt=""
+                                className="w-full h-64 object-cover"
+                            />
+                        </div>
 
                         <div className="p-6 text-gray-900 dark:text-gray-100">
                             <div className="grid gap-1 grid-cols-2 mt-2">
