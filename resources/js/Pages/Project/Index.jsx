@@ -5,8 +5,9 @@ import { PROJECT_STATUS_CLASS_MAP, PROJECT_STATUS_TEXT_MAP } from "@/constants";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
 import TableHeading from "@/Components/TableHeading";
+import Alert from "@/Components/Alert";
 
-export default function index({ projects, queryParams = null, success }) {
+export default function Index({ projects, queryParams = null, success }) {
     queryParams = queryParams || {};
 
     const searchFieldChanged = (name, value) => {
@@ -66,11 +67,8 @@ export default function index({ projects, queryParams = null, success }) {
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    {success && (
-                        <div className="bg-emerald-500 py-2 px-4 text-white rounded mb-4">
-                            {success}
-                        </div>
-                    )}
+                    <Alert message={success} />
+
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800 shadow-sm">
                         <div className="p-6 text-gray-900 dark:text-gray-100">
                             <div className="overflow-auto">
