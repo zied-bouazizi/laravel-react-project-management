@@ -72,7 +72,7 @@ export default function Index({ users, queryParams = null, success }) {
                         href={route("user.create")}
                         className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
                     >
-                        Add new
+                        Create User
                     </Link>
                 </div>
             }
@@ -153,7 +153,7 @@ export default function Index({ users, queryParams = null, success }) {
                                         {users.data.length === 0 && (
                                             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                                 <td className="px-3 py-2" colSpan="5">
-                                                    <p className="text-center">No Users Found</p>
+                                                    <p className="text-center">No users found</p>
                                                 </td>
                                             </tr>
                                         )}

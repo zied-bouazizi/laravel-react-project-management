@@ -15,7 +15,8 @@ export default function TasksTable({
     hideProjectColumn = false,
     insideProject = false,
     projectId = null,
-    inMyTasks = false
+    inMyTasks = false,
+    allTasksCount,
 }) {
     queryParams = queryParams || {};
 
@@ -179,15 +180,20 @@ export default function TasksTable({
                         </tr>
                     </thead>
                     <tbody>
-                        {tasks.data.length === 0 && (
+                        {allTasksCount === 0 ? (
                             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <td className="px-3 py-2" colSpan={hideProjectColumn ? 8 : 9}>
-                                    <p className="text-center">No Tasks Found</p>
+                                <td colSpan={hideProjectColumn ? 8 : 9} className="text-center px-3 py-2">
+                                    No tasks created yet
                                 </td>
                             </tr>
-                        )}
-
-                        {tasks.data.map((task) => (
+                        ) : tasks.data.length === 0 ? (
+                            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <td colSpan={hideProjectColumn ? 8 : 9} className="text-center px-3 py-2">
+                                    No tasks found
+                                </td>
+                            </tr>
+                        ) : (
+                            tasks.data.map((task) => (
                             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={task.id}>
                                 <td className="px-3 py-2">{task.id}</td>
                                 <td className="px-3 py-2">
@@ -228,7 +234,8 @@ export default function TasksTable({
                                     </button>
                                 </td>
                             </tr>
-                        ))}
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>

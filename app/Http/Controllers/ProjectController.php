@@ -7,7 +7,6 @@ use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Resources\ProjectResource;
 use App\Http\Resources\TaskResource;
 use App\Models\Project;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -35,10 +34,13 @@ class ProjectController extends Controller
             ->paginate(10)
             ->onEachSide(1);
 
+        $allProjectsCount = Project::count();
+
         return inertia("Project/Index", [
             "projects" => ProjectResource::collection($projects),
             'queryParams' => request()->query() ?: null,
             'success' => session('success'),
+            'allProjectsCount' => $allProjectsCount,
         ]);
     }
 
@@ -91,11 +93,14 @@ class ProjectController extends Controller
             ->paginate(10)
             ->onEachSide(1);
 
-        return Inertia("Project/Show", [
+        $allProjectTasksCount = $project->tasks()->count();
+
+        return inertia("Project/Show", [
             'project' => new ProjectResource($project),
             'tasks' => TaskResource::collection($tasks),
             'queryParams' => request()->query() ?: null,
             'success' => session('success'),
+            'allProjectTasksCount' => $allProjectTasksCount,
         ]);
     }
 

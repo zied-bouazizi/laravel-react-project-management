@@ -3,7 +3,7 @@ import { Head, Link } from "@inertiajs/react";
 import { PROJECT_STATUS_CLASS_MAP, PROJECT_STATUS_TEXT_MAP } from "@/constants";
 import TasksTable from "../Task/TasksTable";
 
-export default function Show({ project, tasks, queryParams, success }) {
+export default function Show({ project, tasks, queryParams, success, allProjectTasksCount }) {
     return (
         <AuthenticatedLayout
             header={
@@ -103,6 +103,7 @@ export default function Show({ project, tasks, queryParams, success }) {
                                 insideProject={true}
                                 projectId={project.id}
                                 success={success}
+                                allTasksCount={allProjectTasksCount}
                             />
                         </div>
                     </div>

@@ -61,8 +61,8 @@ export default function Dashboard({
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900 dark:text-gray-100">
                             <h3 className="text-gray-200 text-xl font-semibold">
-                                My Active Tasks
-                                </h3>
+                                My Latest Active Tasks
+                            </h3>
 
                             <div className="overflow-x-auto mt-3">
                                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -76,6 +76,14 @@ export default function Dashboard({
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {activeTasks.data.length === 0 && (
+                                            <tr className="bg-white dark:bg-gray-800">
+                                                <td className="px-3 py-2" colSpan="8">
+                                                    <p className="text-center">No active tasks at the moment</p>
+                                                </td>
+                                            </tr>
+                                        )}
+
                                         {activeTasks.data.map((task) => (
                                             <tr key={task.id}>
                                                 <td className="px-3 py-2">{task.id}</td>
