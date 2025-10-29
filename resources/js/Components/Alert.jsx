@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function Alert({ message }) {
+export default function Alert({ message, trigger }) {
     const [show, setShow] = useState(false);
 
     useEffect(() => {
@@ -9,13 +9,14 @@ export default function Alert({ message }) {
             const timer = setTimeout(() => setShow(false), 5000);
             return () => clearTimeout(timer);
         }
-    }, [message]);
+    }, [message, trigger]);
 
     if (!show) return null;
 
-    return (
+    return message ? (
         <div className="bg-emerald-500 py-2 px-4 text-white rounded mb-4">
             {message}
         </div>
-    );
+    ) : null;
+
 }

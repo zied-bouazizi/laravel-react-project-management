@@ -133,7 +133,7 @@ export default function Index({ projects, queryParams = null, success, allProjec
                                                 Due Date
                                             </TableHeading>
                                             <th className="px-3 py-3">Created By</th>
-                                            <th className="px-3 py-3 text-right">Actions</th>
+                                            <th className="px-3 py-3">Actions</th>
                                         </tr>
                                     </thead>
                                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
@@ -184,7 +184,7 @@ export default function Index({ projects, queryParams = null, success, allProjec
                                             projects.data.map((project) => (
                                             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={project.id}>
                                                 <td className="px-3 py-2">{project.id}</td>
-                                                <td className="px-3 py-2">
+                                                <td>
                                                     <img src={project.image_path} style={{ width: 60 }} />
                                                 </td>
                                                 <th className="px-3 py-2 text-gray-100 hover:underline">
@@ -199,7 +199,7 @@ export default function Index({ projects, queryParams = null, success, allProjec
                                                 </td>
                                                 <td className="px-3 py-2 text-nowrap">{project.created_at}</td>
                                                 <td className="px-3 py-2 text-nowrap">{project.due_date}</td>
-                                                <td className="px-3 py-2 text-nowrap">{project.createdBy?.name || "User Deleted"}</td>
+                                                <td className="px-3 py-2 text-nowrap">{project.createdBy?.name || "Member Deleted"}</td>
                                                 <td className="px-3 py-2 text-nowrap">
                                                     <Link
                                                         href={route("project.edit", project.id)}

@@ -23,11 +23,11 @@ export default function Edit({ user }) {
         <AuthenticatedLayout
             header={
                 <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200 leading-tight">
-                    Edit User "{user.name}"
+                    Edit Member "{user.name}"
                 </h2>
             }
         >
-            <Head title={`Edit User "${user.name}"`} />
+            <Head title={`Edit Member "${user.name}"`} />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -37,10 +37,10 @@ export default function Edit({ user }) {
                             className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg"
                         >
                             <div>
-                                <InputLabel htmlFor="user_name" value="User Name" />
+                                <InputLabel htmlFor="member_name" value="Member Name" />
 
                                 <TextInput
-                                    id="user_name"
+                                    id="member_name"
                                     type="text"
                                     name="name"
                                     value={data.name}
@@ -53,12 +53,12 @@ export default function Edit({ user }) {
                             </div>
                             <div className="mt-4">
                                 <InputLabel
-                                    htmlFor="user_email"
-                                    value="User Email"
+                                    htmlFor="member_email"
+                                    value="Member Email"
                                 />
 
                                 <TextInput
-                                    id="user_email"
+                                    id="member_email"
                                     type="email"
                                     name="email"
                                     value={data.email}
@@ -70,12 +70,12 @@ export default function Edit({ user }) {
                             </div>
                             <div className="mt-4">
                                 <InputLabel
-                                    htmlFor="user_password"
+                                    htmlFor="member_password"
                                     value="Password"
                                 />
 
                                 <TextInput
-                                    id="user_password"
+                                    id="member_password"
                                     type="password"
                                     name="password"
                                     className="mt-1 block w-full"
@@ -86,12 +86,12 @@ export default function Edit({ user }) {
                             </div>
                             <div className="mt-4">
                                 <InputLabel
-                                    htmlFor="user_password_confirmation"
+                                    htmlFor="member_password_confirmation"
                                     value="Confirm Password"
                                 />
 
                                 <TextInput
-                                    id="user_password_confirmation"
+                                    id="member_password_confirmation"
                                     type="password"
                                     name="password_confirmation"
                                     className="mt-1 block w-full"

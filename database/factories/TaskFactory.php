@@ -28,6 +28,7 @@ class TaskFactory extends Factory
             'assigned_user_id' => fake()->randomElement([1, 2]),
             'created_by' => 1,
             'updated_by' => 1,
+            'workspace_id' => 1,
             'created_at' => time(),
             'updated_at' => time(),
         ];

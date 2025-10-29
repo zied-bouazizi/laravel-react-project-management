@@ -21,6 +21,7 @@ class UserCrudResource extends JsonResource
             "name" => $this->name,
             "email" => $this->email,
             "created_at" => (new Carbon($this->created_at))->format('Y-m-d'),
+            "is_owner" => $this->ownedWorkspace !== null,
         ];
     }
 }

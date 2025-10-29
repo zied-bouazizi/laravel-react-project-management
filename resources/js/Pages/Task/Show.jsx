@@ -14,7 +14,7 @@ export default function Show({ task }) {
                         href={route("task.edit", task.id)}
                         className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
                     >
-                        Edit 
+                        Edit Task
                     </Link>
                 </div>
             }
@@ -72,7 +72,7 @@ export default function Show({ task }) {
                                     </div>
                                     <div className="mt-4">
                                         <label className="font-bold text-lg">Created By</label>
-                                        <p className="mt-1">{task.createdBy?.name || "User Deleted"}</p>
+                                        <p className="mt-1">{task.createdBy?.name || "Member Deleted"}</p>
                                     </div>
                                 </div>
                                 <div>
@@ -86,7 +86,7 @@ export default function Show({ task }) {
                                     </div>
                                     <div className="mt-4">
                                         <label className="font-bold text-lg">Updated By</label>
-                                        <p className="mt-1">{task.updatedBy?.name || "User Deleted"}</p>
+                                        <p className="mt-1">{task.updatedBy?.name || "Member Deleted"}</p>
                                     </div>
                                     <div className="mt-4">
                                         <label className="font-bold text-lg">Project</label>

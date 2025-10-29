@@ -15,7 +15,7 @@ export default function Show({ project, tasks, queryParams, success, allProjectT
                         href={route("project.edit", project.id)}
                         className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
                     >
-                        Edit
+                        Edit Project
                     </Link>
                 </div>
             }
@@ -60,7 +60,7 @@ export default function Show({ project, tasks, queryParams, success, allProjectT
                                     </div>
                                     <div className="mt-4">
                                         <label className="font-bold text-lg">Created By</label>
-                                        <p className="mt-1">{project.createdBy?.name || "User Deleted"}</p>
+                                        <p className="mt-1">{project.createdBy?.name || "Member Deleted"}</p>
                                     </div>
                                 </div>
                                 <div>
@@ -74,7 +74,7 @@ export default function Show({ project, tasks, queryParams, success, allProjectT
                                     </div>
                                     <div className="mt-4">
                                         <label className="font-bold text-lg">Updated By</label>
-                                        <p className="mt-1">{project.updatedBy?.name || "User Deleted"}</p>
+                                        <p className="mt-1">{project.updatedBy?.name || "Member Deleted"}</p>
                                     </div>
                                 </div>
                             </div>
