@@ -29,11 +29,11 @@ export default function Edit({ task, projects, users }) {
         <AuthenticatedLayout
             header={
                 <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200 leading-tight">
-                    Edit task "{task.name}"
+                    Edit Task "{task.name}"
                 </h2>
             }
         >
-            <Head title="Create Task" />
+            <Head title={`Edit Task "${task.name}"`} />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
