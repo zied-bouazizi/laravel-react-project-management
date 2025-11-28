@@ -137,6 +137,14 @@ export default function index({ users, queryParams = null, success }) {
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {users.data.length === 0 && (
+                                            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                <td className="px-3 py-2" colSpan="5">
+                                                    <p className="text-center">No Users Found</p>
+                                                </td>
+                                            </tr>
+                                        )}
+
                                         {users.data.map((user) => (
                                             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={user.id}>
                                                 <td className="px-3 py-2">{user.id}</td>
