@@ -25,7 +25,7 @@ class TaskController extends Controller
 
         $sortField = request("sort_field", "created_at");
         $sortDirection = request("sort_direction", "desc");
-        
+
         if (request("name")) {
             $query->where("name", "like", "%" . request("name") . "%");
         }
@@ -121,7 +121,7 @@ class TaskController extends Controller
         $task->update($data);
 
         return to_route('task.index')
-            ->with('success', "Task \"$task->name\" was updated"); 
+            ->with('success', "Task \"$task->name\" was updated");
     }
 
     /**
@@ -160,7 +160,7 @@ class TaskController extends Controller
             ->paginate(10)
             ->onEachSide(1);
 
-        return inertia("Task/Index", [
+        return inertia("Task/MyTasks", [
             "tasks" => TaskResource::collection($tasks),
             'queryParams' => request()->query() ?: null,
             'success' => session('success'),

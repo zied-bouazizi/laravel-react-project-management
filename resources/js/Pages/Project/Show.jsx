@@ -98,6 +98,8 @@ export default function Show({ project, tasks, queryParams }) {
                                 tasks={tasks}
                                 queryParams={queryParams}
                                 hideProjectColumn={true}
+                                insideProject={true}
+                                projectId={project.id}
                             />
                         </div>
                     </div>

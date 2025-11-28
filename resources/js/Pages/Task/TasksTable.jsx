@@ -10,8 +10,28 @@ export default function TasksTable({
     success,
     queryParams = null,
     hideProjectColumn = false,
+    insideProject = false,
+    projectId = null,
+    inMyTasks = false
 }) {
     queryParams = queryParams || {};
+
+    const navigate = () => {
+        let targetRoute;
+
+        if (insideProject) {
+            targetRoute = route("project.show", projectId);
+        } else if (inMyTasks) {
+            targetRoute = route("task.myTasks");
+        } else {
+            targetRoute = route("task.index");
+        }
+
+        router.get(targetRoute, queryParams, {
+            preserveState: true,
+            preserveScroll: true,
+        });
+    };
 
     const searchFieldChanged = (name, value) => {
         if (value) {
@@ -20,7 +40,7 @@ export default function TasksTable({
             delete queryParams[name];
         }
 
-        router.get(route("task.index"), queryParams);
+        navigate();
     };
 
     const onKeyPress = (name, e) => {
@@ -40,7 +60,8 @@ export default function TasksTable({
             queryParams.sort_field = name;
             queryParams.sort_direction = "asc";
         }
-        router.get(route("task.index"), queryParams);
+
+        navigate();
     };
 
     const deleteTask = (task) => {
