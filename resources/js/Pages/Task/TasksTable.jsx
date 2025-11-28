@@ -158,7 +158,11 @@ export default function TasksTable({
                                     <img src={task.image_path} style={{ width: 60 }} />
                                 </td>
                                 {!hideProjectColumn && (
-                                    <td className="px-3 py-2">{task.project.name}</td>
+                                     <th className="px-3 py-2 text-gray-100 hover:underline">
+                                        <Link href={route("project.show", task.project.id)}>
+                                            {task.project.name}
+                                        </Link>
+                                    </th>
                                 )}
                                 <th className="px-3 py-2 text-gray-100 hover:underline">
                                     <Link href={route("task.show", task.id)}>
